@@ -1,0 +1,12 @@
+/Users/alexandrearc/Documents/Development/SurfLog.Api/bin/Debug/netcoreapp2.0/SurfLog.Api.deps.json
+/Users/alexandrearc/Documents/Development/SurfLog.Api/bin/Debug/netcoreapp2.0/SurfLog.Api.runtimeconfig.json
+/Users/alexandrearc/Documents/Development/SurfLog.Api/bin/Debug/netcoreapp2.0/SurfLog.Api.runtimeconfig.dev.json
+/Users/alexandrearc/Documents/Development/SurfLog.Api/bin/Debug/netcoreapp2.0/SurfLog.Api.dll
+/Users/alexandrearc/Documents/Development/SurfLog.Api/bin/Debug/netcoreapp2.0/SurfLog.Api.pdb
+/Users/alexandrearc/Documents/Development/SurfLog.Api/obj/Debug/netcoreapp2.0/SurfLog.Api.csproj.CoreCompileInputs.cache
+/Users/alexandrearc/Documents/Development/SurfLog.Api/obj/Debug/netcoreapp2.0/SurfLog.Api.AssemblyInfoInputs.cache
+/Users/alexandrearc/Documents/Development/SurfLog.Api/obj/Debug/netcoreapp2.0/SurfLog.Api.AssemblyInfo.cs
+/Users/alexandrearc/Documents/Development/SurfLog.Api/obj/Debug/netcoreapp2.0/SurfLog.Api.dll
+/Users/alexandrearc/Documents/Development/SurfLog.Api/obj/Debug/netcoreapp2.0/SurfLog.Api.pdb
+/Users/alexandrearc/Documents/Development/SurfLog.Api/bin/Debug/netcoreapp2.0/libe_sqlite3.dylib
+/Users/alexandrearc/Documents/Development/SurfLog.Api/obj/Debug/netcoreapp2.0/SurfLog.Api.csprojResolveAssemblyReference.cache
