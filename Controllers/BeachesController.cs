@@ -16,11 +16,10 @@ namespace SurfLog.Api.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public Beach Get(int id)
+        public JsonResult Get(int id)
         {
-            return _beachService.Get(id);
+            return Json(_beachService.Get(id));
         }
-
     }
 
 }

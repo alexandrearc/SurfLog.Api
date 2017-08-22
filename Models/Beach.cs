@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace SurfLog.Api.Models {
 
     public class Beach {
-        public int Id;
-        public string Name;
+        
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
