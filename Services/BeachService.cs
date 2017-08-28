@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SurfLog.Api.Models;
 using SurfLog.Api.Repositories;
 
@@ -12,6 +13,10 @@ namespace SurfLog.Api.Services
             _beachRepository = beachRepository;
         }
 
+        public IEnumerable<Beach> Get(){
+            return _beachRepository.Get();
+        }
+
         public Beach Get(int id)
         {
             return _beachRepository.GetById(id);
@@ -19,6 +24,14 @@ namespace SurfLog.Api.Services
 
         public void Insert(Beach beach) {
             _beachRepository.Insert(beach);
+        }
+
+        public void Update(Beach beach){
+            _beachRepository.Update(beach);
+        }
+
+        public void Delete(int id){
+            _beachRepository.Delete(id);
         }
 
     }

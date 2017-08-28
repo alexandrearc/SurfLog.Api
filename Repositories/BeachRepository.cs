@@ -27,6 +27,21 @@ namespace SurfLog.Api.Repositories
             _context.SaveChanges();
             return entity;
         }
+
+         public Beach Update(Beach beach){;
+            _context.Update(beach);
+            _context.SaveChanges();
+            return beach;
+        }
+
+        public void Delete(int id){
+            Delete(GetById(id));
+        }
+
+        public void Delete(Beach beach){
+            _context.Beaches.Remove(beach);
+            _context.SaveChanges(); //Check if we need to save changes.
+        }
     }
 }
 
