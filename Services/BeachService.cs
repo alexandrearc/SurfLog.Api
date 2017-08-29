@@ -22,12 +22,12 @@ namespace SurfLog.Api.Services
             return _beachRepository.GetById(id);
         }
 
-        public void Insert(Beach beach) {
-            _beachRepository.Insert(beach);
+        public Beach Insert(Beach beach) {
+            return _beachRepository.Insert(beach);
         }
 
-        public void Update(Beach beach){
-            _beachRepository.Update(beach);
+        public Beach Update(Beach beach){
+            return _beachRepository.Update(beach);
         }
 
         public void Delete(int id){

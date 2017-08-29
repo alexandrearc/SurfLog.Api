@@ -7,8 +7,8 @@ namespace SurfLog.Api.Services
     {
         IEnumerable<Beach> Get();
         Beach Get(int id);
-        void Insert(Beach beach);
-        void Update(Beach beach);
+        Beach Insert(Beach beach);
+        Beach Update(Beach beach);
         void Delete(int id);
     }
 }

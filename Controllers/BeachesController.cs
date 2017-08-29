@@ -14,35 +14,30 @@ namespace SurfLog.Api.Controllers
             _beachService = beachService;
         }
 
-        // GET api/values
         [HttpGet]
         public IEnumerable<Beach> Get()
         {
             return _beachService.Get();
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
             return Json(_beachService.Get(id));
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public JsonResult Post([FromBody]Beach beach)
         {
-            _beachService.Insert(new Beach());
+            return Json(_beachService.Insert(beach));
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]Beach beach)
         {
             _beachService.Update(beach);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
