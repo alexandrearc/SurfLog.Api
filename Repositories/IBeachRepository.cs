@@ -5,6 +5,5 @@ namespace SurfLog.Api.Repositories
 {
     public interface IBeachRepository : IBaseRepository<int, Beach>
     {
-        Beach GetById(int id);
     }
 }
