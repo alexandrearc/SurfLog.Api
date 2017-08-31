@@ -23,7 +23,8 @@ namespace SurfLog.Api
             _contentRootPath = environment.ContentRootPath;
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(_contentRootPath);
+                .SetBasePath(_contentRootPath)
+                .AddJsonFile("appsettings.json");
 
             Configuration = builder.Build();
         }
@@ -33,11 +34,7 @@ namespace SurfLog.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //TODO: Configuration.GetConnectionString("Database")
-            var connectionString = "Data Source=" + "/Users/alexandrearc/Documents/Development/SurfLog.Api/surfLog.db";
-            Console.WriteLine($"Using db: {connectionString}");
-
-            services.AddDbContext<SurfLogContext>(options => options.UseSqlite(connectionString).UseMemoryCache(null));
+            services.AddDbContext<SurfLogContext>(options => options.UseSqlite(Configuration.GetConnectionString("EntityConnection")).UseMemoryCache(null));
             
             services.AddTransient<IBeachRepository, BeachRepository>();   
             services.AddTransient<IBeachService, BeachService>();   
