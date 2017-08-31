@@ -41,6 +41,8 @@ namespace SurfLog.Api
             
             services.AddTransient<IBeachRepository, BeachRepository>();   
             services.AddTransient<IBeachService, BeachService>();   
+            services.AddTransient<ISessionRepository , SessionRepository>(); 
+            services.AddTransient<ISessionService , SessionService>(); 
 
             services.AddMvc();                 
         }

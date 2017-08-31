@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 using SurfLog.Api.Models;
+using SurfLog.Api.Repositories;
 
 namespace SurfLog.Api.Services
 {
-    public interface IBeachService
+    public interface IBeachService : IBaseService<int, Beach>
     {
-        IEnumerable<Beach> Get();
-        Beach Get(int id);
-        Beach Insert(Beach beach);
-        Beach Update(Beach beach);
-        void Delete(int id);
     }
 }
