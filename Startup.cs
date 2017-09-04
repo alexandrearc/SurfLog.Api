@@ -44,6 +44,22 @@ namespace SurfLog.Api
                 config.Password.RequiredLength = 8;
             }).AddEntityFrameworkStores<SurfLogContext>();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o => o.Events = new CookieAuthenticationEvents(){
+                    OnRedirectToLogin = (ctx) => {
+                        if(ctx.Response.StatusCode == 200){
+                            ctx.Response.StatusCode = 401;
+                        }
+                        return Task.CompletedTask;
+                    },
+                    OnRedirectToAccessDenied = (ctx) => {
+                        if(ctx.Response.StatusCode == 200){
+                            ctx.Response.StatusCode = 403;
+                        }
+                        return Task.CompletedTask;
+                    }
+                });
+
             services.AddTransient<IBeachRepository, BeachRepository>();   
             services.AddTransient<IBeachService, BeachService>();   
             services.AddTransient<ISessionRepository , SessionRepository>(); 

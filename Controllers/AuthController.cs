@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SurfLog.Api.Models;
@@ -7,17 +8,24 @@ namespace SurfLog.Api.Controllers
     public class AuthController : Controller
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly SurfLogContext _context;
 
-        public AuthController(SignInManager<User> signInManager)
+        public AuthController(SurfLogContext surfLogContext, SignInManager<User> signInManager)
         {
+            _context = surfLogContext;
             _signInManager = signInManager;
         }
 
         [HttpPost]
-        public JsonResult Login(string userName, string password)
+        public async Task<JsonResult> Login(string userName, string password)
         {
-            //var signInResult = _signInManager.PasswordSignInAsync(userName, password, true, false);
-            return new JsonResult("");
+            //TODO: create model to pass credentials
+            var signInResult = await _signInManager.PasswordSignInAsync(userName, password, false, false);
+            if(signInResult.Succeeded){
+                return new JsonResult(Ok());
+            }
+
+            return new JsonResult(BadRequest("Failed to login."));
         }
     }
 }
