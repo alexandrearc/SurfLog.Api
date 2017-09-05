@@ -59,6 +59,8 @@ namespace SurfLog.Api
                         return Task.CompletedTask;
                     }
                 });
+            
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddTransient<IBeachRepository, BeachRepository>();   
             services.AddTransient<IBeachService, BeachService>();   
@@ -69,7 +71,7 @@ namespace SurfLog.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IDbInitializer dbInitializer)
         {
             //The order on this method matters!
 
@@ -77,6 +79,8 @@ namespace SurfLog.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            dbInitializer.Initialize();
 
             app.UseAuthentication();
 
