@@ -5,6 +5,7 @@ using SurfLog.Api.Models;
 
 namespace SurfLog.Api.Controllers
 {
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private readonly SignInManager<User> _signInManager;
@@ -17,10 +18,10 @@ namespace SurfLog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Login(string userName, string password)
+        public async Task<JsonResult> Login([FromBody] Login model)
         {
             //TODO: create model to pass credentials
-            var signInResult = await _signInManager.PasswordSignInAsync(userName, password, false, false);
+            var signInResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if(signInResult.Succeeded){
                 return new JsonResult(Ok());
             }
