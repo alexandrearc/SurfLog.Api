@@ -18,15 +18,17 @@ namespace SurfLog.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> Login([FromBody] Login model)
+        public async Task<IActionResult> Login([FromBody] Login model)
         {
-            //TODO: create model to pass credentials
-            var signInResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-            if(signInResult.Succeeded){
-                return new JsonResult(Ok());
+            if(!string.IsNullOrEmpty(model.UserName) && !string.IsNullOrEmpty(model.Password)) {
+                //TODO: extract logic to a service.
+                var signInResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+                if(signInResult.Succeeded)
+                {
+                    return Ok();
+                }
             }
-
-            return new JsonResult(BadRequest("Failed to login."));
+            return BadRequest("Failed to login.");
         }
     }
 }
