@@ -1,6 +1,6 @@
-namespace SurfLog.Api.Models
+namespace SurfLog.Api.Dtos
 {
-    public class Login
+    public class LoginDto
     {
         public string UserName { get; set; }
         public string Password { get; set; }

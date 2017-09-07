@@ -10,5 +10,4 @@ namespace SurfLog.Api.Services
         {
         }
     }
-
 }

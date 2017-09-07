@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -66,8 +67,11 @@ namespace SurfLog.Api
             services.AddTransient<IBeachService, BeachService>();   
             services.AddTransient<ISessionRepository , SessionRepository>(); 
             services.AddTransient<ISessionService , SessionService>(); 
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserService, UserService>();
 
-            services.AddMvc();                 
+            services.AddMvc(); 
+            services.AddAutoMapper();                
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

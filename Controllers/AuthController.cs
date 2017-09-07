@@ -1,32 +1,32 @@
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SurfLog.Api.Models;
+using SurfLog.Api.Dtos;
+using SurfLog.Api.Services;
 
 namespace SurfLog.Api.Controllers
 {
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly SurfLogContext _context;
+        private readonly IUserService _userService;
+        private IMapper _mapper;
 
-        public AuthController(SurfLogContext surfLogContext, SignInManager<User> signInManager)
+        public AuthController(IUserService userService, IMapper mapper)
         {
-            _context = surfLogContext;
-            _signInManager = signInManager;
+            _mapper = mapper;
+            _userService = userService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] Login model)
+        public IActionResult Login([FromBody] LoginDto model)
         {
-            if(!string.IsNullOrEmpty(model.UserName) && !string.IsNullOrEmpty(model.Password)) {
-                //TODO: extract logic to a service.
-                var signInResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-                if(signInResult.Succeeded)
-                {
-                    return Ok();
-                }
+            var user = _userService.Login(model.UserName, model.Password);
+            if (user != null)
+            {
+                var userDto = _mapper.Map<UserDto>(user);
+                return Ok(userDto);
             }
             return BadRequest("Failed to login.");
         }
