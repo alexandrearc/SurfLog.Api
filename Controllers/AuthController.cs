@@ -20,9 +20,9 @@ namespace SurfLog.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([FromBody] LoginDto model)
+        public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
-            var user = _userService.Login(model.UserName, model.Password);
+            var user = await _userService.Login(model.UserName, model.Password);
             if (user != null)
             {
                 var userDto = _mapper.Map<UserDto>(user);
