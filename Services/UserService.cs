@@ -8,11 +8,13 @@ namespace SurfLog.Api.Services
     public class UserService : BaseService<int, User, IUserRepository>, IUserService
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUserRepository repo, SignInManager<User> signInManager) : base(repo)
+        public UserService(IUserRepository repo, SignInManager<User> signInManager, UserManager<User> userManager) : base(repo)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
             _userRepository = repo;
         }
 
@@ -27,8 +29,12 @@ namespace SurfLog.Api.Services
             return null;
         }
 
-        public User Create(){
-            return new User();
+        public async Task<User> Register(User newUser){
+           var createResult = await _userManager.CreateAsync(newUser);
+           if(createResult.Succeeded){
+               return newUser;
+           }
+           return null; //TODO: should return the errors 
         }
     }
 }
