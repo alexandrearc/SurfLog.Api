@@ -43,6 +43,12 @@ namespace SurfLog.Api
             services.AddIdentity<User, Role>(config => {
                 config.User.RequireUniqueEmail = true;
                 config.Password.RequiredLength = 8;
+
+                //DEV only configuration
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireDigit = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireLowercase = false;
             }).AddEntityFrameworkStores<SurfLogContext>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
