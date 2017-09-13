@@ -29,8 +29,8 @@ namespace SurfLog.Api.Services
             return null;
         }
 
-        public async Task<User> Register(User newUser){
-           var createResult = await _userManager.CreateAsync(newUser);
+        public async Task<User> Register(User newUser, string password){
+           var createResult = await _userManager.CreateAsync(newUser, password);
            if(createResult.Succeeded){
                return newUser;
            }

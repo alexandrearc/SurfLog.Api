@@ -7,6 +7,7 @@ using SurfLog.Api.Services;
 
 namespace SurfLog.Api.Controllers
 {
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -21,7 +22,7 @@ namespace SurfLog.Api.Controllers
         public async Task<IActionResult> Register([FromBody] UserDto model)
         {
             var user = _mapper.Map<User>(model);
-            var newUser = await _userService.Register(user);
+            var newUser = await _userService.Register(user, model.Password);
             if (newUser != null)
             {
                 var userDto = _mapper.Map<UserDto>(newUser);
