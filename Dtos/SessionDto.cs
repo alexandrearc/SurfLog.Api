@@ -1,13 +1,12 @@
 using System;
-using System.ComponentModel.DataAnnotations;
+using SurfLog.Api.Models;
 
-namespace SurfLog.Api.Models
+namespace SurfLog.Api.Dtos
 {
-    public class Session
+    public class SessionDto
     {
-        [Key]
         public int Id { get; set; }
-        public Beach Beach { get; set; }
+        public int BeachId { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public decimal Duration { get; set; }
