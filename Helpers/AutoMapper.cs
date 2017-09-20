@@ -10,6 +10,9 @@ namespace SurfLog.Api.Helpers
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+
+            CreateMap<Session, SessionDto>();
+            CreateMap<SessionDto, Session>();
         }
     }
 }
