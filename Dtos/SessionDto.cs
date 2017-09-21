@@ -11,6 +11,6 @@ namespace SurfLog.Api.Dtos
         public string Description { get; set; }
         public decimal Duration { get; set; }
         public int Rating { get; set; }
-        public int UserId { get; set;}
+        public string UserId { get; set;}
     }
 }

@@ -25,7 +25,7 @@ namespace SurfLog.Api.Controllers
         }
 
          [HttpGet("user/{id}")]
-        public IActionResult GetByUser(int userId)
+        public IActionResult GetByUser(string userId)
         {
             return Ok(_sessionService.GetByUser(userId));
         }

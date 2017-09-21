@@ -5,6 +5,6 @@ namespace SurfLog.Api.Services
 {
     public interface ISessionService : IBaseService<int, Session>
     {
-         IEnumerable<Session> GetByUser(int userId);
+         IEnumerable<Session> GetByUser(string userId);
     }
 }

@@ -12,7 +12,7 @@ namespace SurfLog.Api.Services
             _sessionRepository = repo;
         }
 
-        public IEnumerable<Session> GetByUser(int userId) {
+        public IEnumerable<Session> GetByUser(string userId) {
             return _sessionRepository.GetByUser(userId);
         }
     }

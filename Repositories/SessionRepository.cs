@@ -15,7 +15,7 @@ namespace SurfLog.Api.Repositories
             return _dbSet.FirstOrDefault(b => b.Id == id);
         }
 
-        public IEnumerable<Session> GetByUser(int userId){
+        public IEnumerable<Session> GetByUser(string userId){
             return _dbSet.Where(s => s.UserId == userId);
         }
     }
