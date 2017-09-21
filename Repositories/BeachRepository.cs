@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SurfLog.Api.Models;
@@ -13,6 +14,11 @@ namespace SurfLog.Api.Repositories
         public override Beach GetById(int id)
         {
             return _dbSet.FirstOrDefault(b => b.Id == id);
+        }
+
+        public IEnumerable SearchByName(string name)
+        {
+            return _dbSet.Where(b => b.Name.Contains(name));
         }
     }
 }

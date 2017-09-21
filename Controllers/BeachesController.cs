@@ -26,6 +26,12 @@ namespace SurfLog.Api.Controllers
             return Json(_beachService.Get(id));
         }
 
+        [HttpGet("name/{name}")]
+        public JsonResult Get(string name)
+        {
+            return Json(_beachService.SearchByName(name));
+        }
+
         [HttpPost]
         public JsonResult Post([FromBody]Beach beach)
         {
