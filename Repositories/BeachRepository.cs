@@ -18,7 +18,7 @@ namespace SurfLog.Api.Repositories
 
         public IEnumerable SearchByName(string name)
         {
-            return _dbSet.Where(b => b.Name.Contains(name));
+            return _dbSet.Where(b => b.Name.ToLower().StartsWith(name));
         }
     }
 }
