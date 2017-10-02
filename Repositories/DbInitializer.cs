@@ -33,8 +33,9 @@ namespace SurfLog.Api.Repositories
             await _roleManager.CreateAsync(new Role("Administrator"));
 
             string user = "admin";
+            string email = "admin@surflog";
             string password = "P@ssword1";
-            await _userManager.CreateAsync(new User { UserName = user, Email = user, EmailConfirmed = true}, password);
+            await _userManager.CreateAsync(new User { UserName = user, Email = email, EmailConfirmed = true}, password);
             await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user), "Administrator");
         }
 
