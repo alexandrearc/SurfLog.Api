@@ -55,7 +55,13 @@ namespace SurfLog.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Ground = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Skill = table.Column<string>(type: "TEXT", nullable: true),
+                    Swell = table.Column<string>(type: "TEXT", nullable: true),
+                    Type = table.Column<string>(type: "TEXT", nullable: true),
+                    Wind = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,12 +180,12 @@ namespace SurfLog.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    BeachId = table.Column<int>(type: "INTEGER", nullable: true),
+                    BeachId = table.Column<int>(type: "INTEGER", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     Duration = table.Column<decimal>(type: "TEXT", nullable: false),
                     Rating = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<string>(type: "TEXT", nullable: true)
+                    UserId = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -189,11 +195,37 @@ namespace SurfLog.Api.Migrations
                         column: x => x.BeachId,
                         principalTable: "Beaches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Sessions_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conditions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Angle = table.Column<int>(type: "INTEGER", nullable: false),
+                    Period = table.Column<int>(type: "INTEGER", nullable: false),
+                    Score = table.Column<int>(type: "INTEGER", nullable: false),
+                    SessionId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Speed = table.Column<int>(type: "INTEGER", nullable: false),
+                    Swell = table.Column<int>(type: "INTEGER", nullable: false),
+                    Tide = table.Column<string>(type: "TEXT", nullable: true),
+                    Wind = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conditions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Conditions_Sessions_SessionId",
+                        column: x => x.SessionId,
+                        principalTable: "Sessions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -236,6 +268,11 @@ namespace SurfLog.Api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Conditions_SessionId",
+                table: "Conditions",
+                column: "SessionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sessions_BeachId",
                 table: "Sessions",
                 column: "BeachId");
@@ -264,10 +301,13 @@ namespace SurfLog.Api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Sessions");
+                name: "Conditions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Sessions");
 
             migrationBuilder.DropTable(
                 name: "Beaches");

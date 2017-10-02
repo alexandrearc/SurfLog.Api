@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using SurfLog.Api.Enums;
 using System;
 
 namespace SurfLog.Api.Migrations
@@ -107,11 +108,52 @@ namespace SurfLog.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Ground");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("Skill");
+
+                    b.Property<string>("Swell");
+
+                    b.Property<string>("Type");
+
+                    b.Property<string>("Wind");
 
                     b.HasKey("Id");
 
                     b.ToTable("Beaches");
+                });
+
+            modelBuilder.Entity("SurfLog.Api.Models.Condition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Angle");
+
+                    b.Property<int>("Period");
+
+                    b.Property<int>("Score");
+
+                    b.Property<int?>("SessionId");
+
+                    b.Property<int>("Speed");
+
+                    b.Property<int>("Swell");
+
+                    b.Property<string>("Tide");
+
+                    b.Property<int>("Wind");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("SurfLog.Api.Models.Role", b =>
@@ -142,7 +184,7 @@ namespace SurfLog.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("BeachId");
+                    b.Property<int>("BeachId");
 
                     b.Property<DateTime>("Date");
 
@@ -152,7 +194,8 @@ namespace SurfLog.Api.Migrations
 
                     b.Property<int>("Rating");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -262,15 +305,24 @@ namespace SurfLog.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("SurfLog.Api.Models.Condition", b =>
+                {
+                    b.HasOne("SurfLog.Api.Models.Session", "Session")
+                        .WithMany()
+                        .HasForeignKey("SessionId");
+                });
+
             modelBuilder.Entity("SurfLog.Api.Models.Session", b =>
                 {
                     b.HasOne("SurfLog.Api.Models.Beach", "Beach")
                         .WithMany()
-                        .HasForeignKey("BeachId");
+                        .HasForeignKey("BeachId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("SurfLog.Api.Models.User")
                         .WithMany("Session")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
