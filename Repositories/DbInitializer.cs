@@ -35,7 +35,12 @@ namespace SurfLog.Api.Repositories
             string user = "admin";
             string email = "admin@surflog";
             string password = "P@ssword1";
-            await _userManager.CreateAsync(new User { UserName = user, Email = email, EmailConfirmed = true}, password);
+            await _userManager.CreateAsync(
+                    new User { UserName = user,
+                               Email = email,
+                               FirstName = "A",
+                               LastName = "C",
+                               EmailConfirmed = true}, password);
             await _userManager.AddToRoleAsync(await _userManager.FindByNameAsync(user), "Administrator");
         }
 
@@ -45,7 +50,7 @@ namespace SurfLog.Api.Repositories
 
             if(_context.Beaches.Any()) return;
             
-            _context.Beaches.Add(new Beach { Name="90 Mile Beach"});
+            _context.Beaches.Add( new Beach { Name="90 Mile Beach"});
             _context.Beaches.Add( new Beach { Name="Ahipara Beach"});
             _context.Beaches.Add( new Beach { Name="Aranga Beach"});
             _context.Beaches.Add( new Beach { Name="Baylys Beach"});

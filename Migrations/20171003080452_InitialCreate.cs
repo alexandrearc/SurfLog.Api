@@ -31,8 +31,8 @@ namespace SurfLog.Api.Migrations
                     ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: true),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", nullable: false),
                     LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
                     NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -210,11 +210,11 @@ namespace SurfLog.Api.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Angle = table.Column<int>(type: "INTEGER", nullable: false),
-                    Period = table.Column<int>(type: "INTEGER", nullable: false),
-                    Score = table.Column<int>(type: "INTEGER", nullable: false),
-                    SessionId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Speed = table.Column<int>(type: "INTEGER", nullable: false),
+                    Angle = table.Column<int>(type: "INTEGER", nullable: true),
+                    Period = table.Column<int>(type: "INTEGER", nullable: true),
+                    Score = table.Column<int>(type: "INTEGER", nullable: true),
+                    SessionId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Speed = table.Column<int>(type: "INTEGER", nullable: true),
                     Swell = table.Column<int>(type: "INTEGER", nullable: false),
                     Tide = table.Column<string>(type: "TEXT", nullable: true),
                     Wind = table.Column<int>(type: "INTEGER", nullable: false)
@@ -227,7 +227,7 @@ namespace SurfLog.Api.Migrations
                         column: x => x.SessionId,
                         principalTable: "Sessions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

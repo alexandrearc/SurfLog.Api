@@ -11,7 +11,7 @@ using System;
 namespace SurfLog.Api.Migrations
 {
     [DbContext(typeof(SurfLogContext))]
-    [Migration("20171002071033_InitialCreate")]
+    [Migration("20171003080452_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,15 +134,15 @@ namespace SurfLog.Api.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Angle");
+                    b.Property<int?>("Angle");
 
-                    b.Property<int>("Period");
+                    b.Property<int?>("Period");
 
-                    b.Property<int>("Score");
+                    b.Property<int?>("Score");
 
-                    b.Property<int?>("SessionId");
+                    b.Property<int>("SessionId");
 
-                    b.Property<int>("Speed");
+                    b.Property<int?>("Speed");
 
                     b.Property<int>("Swell");
 
@@ -222,9 +222,11 @@ namespace SurfLog.Api.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .IsRequired();
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .IsRequired();
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -310,7 +312,8 @@ namespace SurfLog.Api.Migrations
                 {
                     b.HasOne("SurfLog.Api.Models.Session", "Session")
                         .WithMany()
-                        .HasForeignKey("SessionId");
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("SurfLog.Api.Models.Session", b =>

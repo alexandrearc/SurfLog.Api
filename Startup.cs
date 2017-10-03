@@ -88,9 +88,10 @@ namespace SurfLog.Api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
 
-            dbInitializer.Initialize();
+                //If you drop the database comment this line before update migrations.
+                dbInitializer.Initialize();
+            }
 
             app.UseAuthentication();
 
