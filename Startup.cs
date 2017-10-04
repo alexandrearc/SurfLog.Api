@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using SurfLog.Api.Models;
 using SurfLog.Api.Repositories;
 using SurfLog.Api.Services;
@@ -39,6 +44,8 @@ namespace SurfLog.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SurfLogContext>(options => options.UseSqlite(Configuration.GetConnectionString("EntityConnection")).UseMemoryCache(null));
+
+            services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
             
             services.AddIdentity<User, Role>(config => {
                 config.User.RequireUniqueEmail = true;
@@ -51,21 +58,53 @@ namespace SurfLog.Api
                 config.Password.RequireLowercase = false;
             }).AddEntityFrameworkStores<SurfLogContext>();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+             // secretKey contains a secret passphrase only your server knows
+            var secretKey = Configuration.GetSection("JWTSettings:SecretKey").Value;
+            var issuer = Configuration.GetSection("JWTSettings:Issuer").Value;
+            var audience = Configuration.GetSection("JWTSettings:Audience").Value;
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = true,
+                ValidIssuer = issuer,
+
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = true,
+                ValidAudience = audience
+            };
+
+            services
+                .AddAuthentication( o => {
+                     o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    }
+                )
                 .AddCookie(o => o.Events = new CookieAuthenticationEvents(){
                     OnRedirectToLogin = (ctx) => {
                         if(ctx.Response.StatusCode == 200){
-                            ctx.Response.StatusCode = 401;
+                            ctx.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
                         }
                         return Task.CompletedTask;
                     },
                     OnRedirectToAccessDenied = (ctx) => {
                         if(ctx.Response.StatusCode == 200){
-                            ctx.Response.StatusCode = 403;
+                            ctx.Response.StatusCode = (int) HttpStatusCode.Forbidden;
                         }
                         return Task.CompletedTask;
                     }
+                })
+                .AddJwtBearer( o => {
+                    o.TokenValidationParameters = tokenValidationParameters;
                 });
+            
+            //TODO: Check why this is needed
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser().Build();
+            });
             
             services.AddScoped<IDbInitializer, DbInitializer>();
 

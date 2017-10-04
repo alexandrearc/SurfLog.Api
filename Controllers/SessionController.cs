@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurfLog.Api.Dtos;
 using SurfLog.Api.Models;
@@ -6,7 +7,8 @@ using SurfLog.Api.Services;
 
 namespace SurfLog.Api.Controllers
 {
-     [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]")]
     public class SessionController : Controller
     {
         private readonly ISessionService _sessionService;

@@ -32,7 +32,7 @@ namespace SurfLog.Api.Services
         public async Task<User> Register(User newUser, string password){
            var createResult = await _userManager.CreateAsync(newUser, password);
            if(createResult.Succeeded){
-               return newUser;
+               return await _userManager.FindByEmailAsync(newUser.Email);
            }
            return null; //TODO: should return the errors 
         }
