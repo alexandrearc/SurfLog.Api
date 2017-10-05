@@ -9,7 +9,7 @@ namespace SurfLog.Api.Dtos
         public string Email { get; set; }
         public string EmailConfirmed { get; set; }
         public string Password { get; set; }
-        public string access_token { get; set; }
+        public string Token { get; set; }
         public string id_token { get; set; }
     }
 }

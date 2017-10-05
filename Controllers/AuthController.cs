@@ -31,21 +31,21 @@ namespace SurfLog.Api.Controllers
              _options = optionsAccessor.Value;
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
             var user = await _userService.Login(model.UserName, model.Password);
             if (user != null)
             {
                 var userDto = _mapper.Map<UserDto>(user);
-                userDto.access_token = GetAccessToken(userDto.Email);
+                userDto.Token = GetAccessToken(userDto.Email);
                 userDto.id_token = GetIdToken(userDto);
                 return Ok(userDto);
             }
             return new JsonResult("Unable to Log in.") { StatusCode = 401 };
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserDto model)
         {
             var user = _mapper.Map<User>(model);
@@ -53,7 +53,7 @@ namespace SurfLog.Api.Controllers
             if (newUser != null)
             {
                 var userDto = _mapper.Map<UserDto>(newUser);
-                userDto.access_token = GetAccessToken(userDto.Email);
+                userDto.Token = GetAccessToken(userDto.Email);
                 userDto.id_token = GetIdToken(userDto);
                 return Ok(userDto);
             }
