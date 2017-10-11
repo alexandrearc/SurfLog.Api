@@ -2,12 +2,15 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurfLog.Api.Dtos;
+using SurfLog.Api.Helpers;
 using SurfLog.Api.Models;
+using SurfLog.Api.Requests;
 using SurfLog.Api.Services;
 
 namespace SurfLog.Api.Controllers
 {
     [Authorize]
+    [ApiValidationFilterAttribute]
     [Route("api/[controller]")]
     public class SessionController : Controller
     {
@@ -23,25 +26,31 @@ namespace SurfLog.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_sessionService.Get(id));
+            var session = _sessionService.Get(id);
+            if(session == null)
+                return NotFound(new ApiBadRequestResponse());
+            return Ok(new ApiOkResponse(session));
         }
 
          [HttpGet("user/{id}")]
         public IActionResult GetByUser(string userId)
-        {
-            return Ok(_sessionService.GetByUser(userId));
+        { 
+            var session = _sessionService.GetByUser(userId);
+            if(session == null)
+                return NotFound(new ApiBadRequestResponse());
+            return Ok(new ApiOkResponse(session));
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] SessionDto dto){
-            var session = _mapper.Map<Session>(dto);
+        public IActionResult Post([FromBody] PostSessionRequest request){
+            var session = _mapper.Map<Session>(request);
             return Ok(_sessionService.Insert(session));
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]SessionDto dto)
+        public IActionResult Put(int id, [FromBody] PostSessionRequest request)
         {
-            var session = _mapper.Map<Session>(dto);
+            var session = _mapper.Map<Session>(request);
             return Ok(_sessionService.Update(session));
         }
 

@@ -1,10 +1,14 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using SurfLog.Api.Models;
 
-namespace SurfLog.Api.Dtos
+namespace SurfLog.Api.Requests
 {
-    public class SessionDto
+    public class PostSessionRequest
     {
+        [Required]
         public int BeachId { get; set; }
+        [Required]
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public decimal Duration { get; set; }

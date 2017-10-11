@@ -10,12 +10,15 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SurfLog.Api.Dtos;
+using SurfLog.Api.Helpers;
 using SurfLog.Api.Models;
+using SurfLog.Api.Requests;
 using SurfLog.Api.Services;
 
 
 namespace SurfLog.Api.Controllers
 {
+    [ApiValidationFilterAttribute]
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
@@ -32,30 +35,30 @@ namespace SurfLog.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto model)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var user = await _userService.Login(model.UserName, model.Password);
+            var user = await _userService.Login(request.UserName, request.Password);
             if (user != null)
             {
                 var userDto = _mapper.Map<UserDto>(user);
                 userDto.Token = GetAccessToken(userDto.Email);
                 userDto.id_token = GetIdToken(userDto);
-                return Ok(userDto);
+                return Ok(new ApiOkResponse(userDto));
             }
-            return new JsonResult("Unable to Log in.") { StatusCode = 401 };
+            return NotFound( new ApiResponse(401, "Sorry, we were unable to log in."));
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserDto model)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var user = _mapper.Map<User>(model);
-            var newUser = await _userService.Register(user, model.Password);
+            var user = _mapper.Map<User>(request);
+            var newUser = await _userService.Register(user, request.Password);
             if (newUser != null)
             {
                 var userDto = _mapper.Map<UserDto>(newUser);
                 userDto.Token = GetAccessToken(userDto.Email);
                 userDto.id_token = GetIdToken(userDto);
-                return Ok(userDto);
+                return Ok(new ApiOkResponse(userDto));
             }
             return BadRequest("Failed to create user.");
         }

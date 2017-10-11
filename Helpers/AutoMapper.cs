@@ -1,6 +1,7 @@
 using AutoMapper;
 using SurfLog.Api.Dtos;
 using SurfLog.Api.Models;
+using SurfLog.Api.Requests;
 
 namespace SurfLog.Api.Helpers
 {
@@ -11,8 +12,8 @@ namespace SurfLog.Api.Helpers
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
 
-            CreateMap<Session, SessionDto>();
-            CreateMap<SessionDto, Session>();
+            CreateMap<RegisterRequest, User>(); 
+            CreateMap<PostSessionRequest, Session>();
         }
     }
 }
