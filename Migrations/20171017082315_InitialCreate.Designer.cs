@@ -11,7 +11,7 @@ using System;
 namespace SurfLog.Api.Migrations
 {
     [DbContext(typeof(SurfLogContext))]
-    [Migration("20171003080452_InitialCreate")]
+    [Migration("20171017082315_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,7 +152,8 @@ namespace SurfLog.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SessionId");
+                    b.HasIndex("SessionId")
+                        .IsUnique();
 
                     b.ToTable("Conditions");
                 });
@@ -311,8 +312,8 @@ namespace SurfLog.Api.Migrations
             modelBuilder.Entity("SurfLog.Api.Models.Condition", b =>
                 {
                     b.HasOne("SurfLog.Api.Models.Session", "Session")
-                        .WithMany()
-                        .HasForeignKey("SessionId")
+                        .WithOne("Condition")
+                        .HasForeignKey("SurfLog.Api.Models.Condition", "SessionId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

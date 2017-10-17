@@ -270,7 +270,8 @@ namespace SurfLog.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Conditions_SessionId",
                 table: "Conditions",
-                column: "SessionId");
+                column: "SessionId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sessions_BeachId",

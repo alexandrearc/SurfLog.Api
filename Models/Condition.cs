@@ -38,5 +38,7 @@ namespace SurfLog.Api.Models
         /// Conditions' score from 1 to 5 stars.
         /// </summary>
         public int? Score { get; set; }
+
+        public int SessionId { get; set; }
     }
 }

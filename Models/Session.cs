@@ -22,5 +22,7 @@ namespace SurfLog.Api.Models
 
         [Required]
         public string UserId { get; set;}
+
+        public Condition Condition { get; set;}
     }
 }
