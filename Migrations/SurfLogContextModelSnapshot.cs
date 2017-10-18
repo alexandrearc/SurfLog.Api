@@ -139,7 +139,7 @@ namespace SurfLog.Api.Migrations
 
                     b.Property<int?>("Score");
 
-                    b.Property<int>("SessionId");
+                    b.Property<int?>("SessionId");
 
                     b.Property<int?>("Speed");
 
@@ -312,8 +312,7 @@ namespace SurfLog.Api.Migrations
                 {
                     b.HasOne("SurfLog.Api.Models.Session", "Session")
                         .WithOne("Condition")
-                        .HasForeignKey("SurfLog.Api.Models.Condition", "SessionId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SurfLog.Api.Models.Condition", "SessionId");
                 });
 
             modelBuilder.Entity("SurfLog.Api.Models.Session", b =>

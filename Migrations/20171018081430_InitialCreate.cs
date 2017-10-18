@@ -213,7 +213,7 @@ namespace SurfLog.Api.Migrations
                     Angle = table.Column<int>(type: "INTEGER", nullable: true),
                     Period = table.Column<int>(type: "INTEGER", nullable: true),
                     Score = table.Column<int>(type: "INTEGER", nullable: true),
-                    SessionId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SessionId = table.Column<int>(type: "INTEGER", nullable: true),
                     Speed = table.Column<int>(type: "INTEGER", nullable: true),
                     Swell = table.Column<int>(type: "INTEGER", nullable: false),
                     Tide = table.Column<string>(type: "TEXT", nullable: true),
@@ -227,7 +227,7 @@ namespace SurfLog.Api.Migrations
                         column: x => x.SessionId,
                         principalTable: "Sessions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
