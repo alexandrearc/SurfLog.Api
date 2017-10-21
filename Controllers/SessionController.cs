@@ -1,7 +1,9 @@
+using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SurfLog.Api.Dtos;
+using SurfLog.Api.Enums;
 using SurfLog.Api.Helpers;
 using SurfLog.Api.Models;
 using SurfLog.Api.Requests;
@@ -44,6 +46,13 @@ namespace SurfLog.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] PostSessionRequest request){
             var session = _mapper.Map<Session>(request);
+            /** session.Condition = new Condition {
+                Swell = (CardinalDirections) Enum.Parse(typeof(CardinalDirections), request.Swell),
+                Angle = request.Angle,
+                Wind = (CardinalDirections) Enum.Parse(typeof(CardinalDirections), request.Wind),
+                Score = request.Score,
+                Period = request.Period
+            }; **/
             return Ok(_sessionService.Insert(session));
         }
 

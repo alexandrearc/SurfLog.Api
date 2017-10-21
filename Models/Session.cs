@@ -9,7 +9,7 @@ namespace SurfLog.Api.Models
         public int Id { get; set; }
         
         [Required]
-        public Beach Beach { get; set; }
+        public int BeachId { get; set; }
         
         [Required]
         public DateTime Date { get; set; }
@@ -23,6 +23,6 @@ namespace SurfLog.Api.Models
         [Required]
         public string UserId { get; set;}
 
-        public Condition Condition { get; set;}
+        public virtual Condition Condition { get; set; }
     }
 }

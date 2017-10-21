@@ -191,12 +191,6 @@ namespace SurfLog.Api.Migrations
                 {
                     table.PrimaryKey("PK_Sessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sessions_Beaches_BeachId",
-                        column: x => x.BeachId,
-                        principalTable: "Beaches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Sessions_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
@@ -274,11 +268,6 @@ namespace SurfLog.Api.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sessions_BeachId",
-                table: "Sessions",
-                column: "BeachId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Sessions_UserId",
                 table: "Sessions",
                 column: "UserId");
@@ -302,6 +291,9 @@ namespace SurfLog.Api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Beaches");
+
+            migrationBuilder.DropTable(
                 name: "Conditions");
 
             migrationBuilder.DropTable(
@@ -309,9 +301,6 @@ namespace SurfLog.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "Sessions");
-
-            migrationBuilder.DropTable(
-                name: "Beaches");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

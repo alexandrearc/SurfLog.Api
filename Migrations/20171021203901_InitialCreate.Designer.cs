@@ -11,7 +11,7 @@ using System;
 namespace SurfLog.Api.Migrations
 {
     [DbContext(typeof(SurfLogContext))]
-    [Migration("20171018081430_InitialCreate")]
+    [Migration("20171021203901_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,8 +201,6 @@ namespace SurfLog.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BeachId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Sessions");
@@ -318,11 +316,6 @@ namespace SurfLog.Api.Migrations
 
             modelBuilder.Entity("SurfLog.Api.Models.Session", b =>
                 {
-                    b.HasOne("SurfLog.Api.Models.Beach", "Beach")
-                        .WithMany()
-                        .HasForeignKey("BeachId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("SurfLog.Api.Models.User")
                         .WithMany("Session")
                         .HasForeignKey("UserId")

@@ -8,8 +8,7 @@ namespace SurfLog.Api.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public Session Session { get; set; }
+        public virtual Session Session { get; set; }
 
         public string Tide { get; set; }
         
@@ -39,6 +38,6 @@ namespace SurfLog.Api.Models
         /// </summary>
         public int? Score { get; set; }
 
-        public int SessionId { get; set; }
+        public int? SessionId { get; set; }
     }
 }

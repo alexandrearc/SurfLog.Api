@@ -21,5 +21,9 @@ namespace SurfLog.Api.Models {
         public string Skill { get; set; }
 
         public string Ground { get; set; }
+
+        public Beach(){
+
+        }
     }
 }
