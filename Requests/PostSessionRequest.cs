@@ -15,6 +15,8 @@ namespace SurfLog.Api.Requests
         public string Description { get; set; }
         public decimal Duration { get; set; }
         public int Rating { get; set; }
+
+        [Required]
         public string UserId { get; set;}
         public Condition Condition { get; set; }
     }

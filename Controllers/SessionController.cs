@@ -46,14 +46,20 @@ namespace SurfLog.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] PostSessionRequest request){
             var session = _mapper.Map<Session>(request);
-            return Ok(_sessionService.Insert(session));
+            var newSession = _sessionService.Insert(session);
+            if(newSession == null)
+                return BadRequest("Failed to create session.");
+            return Ok(new ApiOkResponse(newSession));
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] PostSessionRequest request)
         {
             var session = _mapper.Map<Session>(request);
-            return Ok(_sessionService.Update(session));
+            var updatedSession = _sessionService.Update(session);
+            if (updatedSession == null)
+                return BadRequest("Failed to update session.");
+            return Ok(new ApiOkResponse(updatedSession));
         }
 
         [HttpDelete("{id}")]
