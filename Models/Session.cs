@@ -1,8 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 
 namespace SurfLog.Api.Models
 {
+    [JsonObject(IsReference = true)]
     public class Session
     {
         [Key]
