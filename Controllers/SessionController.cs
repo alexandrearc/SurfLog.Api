@@ -35,12 +35,10 @@ namespace SurfLog.Api.Controllers
         }
 
          [HttpGet("user/{id}")]
-        public IActionResult GetByUser(string userId)
+        public IActionResult GetByUser(string id)
         { 
-            var session = _sessionService.GetByUser(userId);
-            if(session == null)
-                return NotFound(new ApiBadRequestResponse());
-            return Ok(new ApiOkResponse(session));
+            var sessions = _sessionService.GetByUser(id);
+            return Ok(new ApiOkResponse(sessions));
         }
 
         [HttpPost]
