@@ -13,7 +13,9 @@ namespace SurfLog.Api.Repositories
 
         public override Session GetById(int id)
         {
-            return _dbSet.FirstOrDefault(b => b.Id == id);
+            return _dbSet.Include(b => b.Condition)
+                         .FirstOrDefault(b => b.Id == id);
+                         
         }
 
         public IEnumerable<Session> GetByUser(string userId){
