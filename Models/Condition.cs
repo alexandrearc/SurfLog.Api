@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
 using SurfLog.Api.Enums;
 
 namespace SurfLog.Api.Models
@@ -8,6 +9,7 @@ namespace SurfLog.Api.Models
         [Key]
         public int Id { get; set; }
 
+        [JsonIgnore] 
         public virtual Session Session { get; set; }
 
         public string Tide { get; set; }

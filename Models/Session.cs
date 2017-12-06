@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace SurfLog.Api.Models
 {
-    [JsonObject(IsReference = true)]
     public class Session
     {
         [Key]
@@ -26,5 +25,7 @@ namespace SurfLog.Api.Models
         public string UserId { get; set;}
 
         public virtual Condition Condition { get; set; }
+
+        public virtual Beach Beach { get; set; }
     }
 }
