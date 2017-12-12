@@ -54,6 +54,7 @@ namespace SurfLog.Api.Controllers
         public IActionResult Put(int id, [FromBody] PostSessionRequest request)
         {
             var session = _mapper.Map<Session>(request);
+            session.Id = id;
             var updatedSession = _sessionService.Update(session);
             if (updatedSession == null)
                 return BadRequest("Failed to update session.");
