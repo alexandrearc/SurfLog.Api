@@ -21,7 +21,8 @@ namespace SurfLog.Api.Repositories
         public IEnumerable<Session> GetByUser(string userId){
 
             return _dbSet.Where(s => s.UserId == userId)
-                         .Include( s => s.Condition);
+                         .Include(s => s.Condition)
+                         .Include(b => b.Beach);
         }
     }
 }
